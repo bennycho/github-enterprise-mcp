@@ -8,10 +8,10 @@
   },
   "scripts": {
     "build": "tsc && npm run copy-i18n",
+    "build:watch": "tsc --watch && npm run copy-i18n",
     "copy-i18n": "mkdir -p dist/i18n/en dist/i18n/ko && cp i18n/en/*.json dist/i18n/en/ && cp i18n/ko/*.json dist/i18n/ko/",
     "start": "node dist/index.js",
     "dev": "concurrently \"npm run build:watch\" \"npm run dev:js\"",
-    "build:watch": "tsc --watch && npm run copy-i18n",
     "dev:js": "nodemon dist/index.js --transport http",
     "test": "npm run build && node test-i18n.js",
     "lint": "eslint src/**/*.ts",
