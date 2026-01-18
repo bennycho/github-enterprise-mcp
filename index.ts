@@ -39,7 +39,7 @@ export * from './api/users/types.js';
 const isDirectRun = process.argv[1] === import.meta.url || 
                     process.argv[1]?.endsWith('/index.js') || 
                     process.argv[1]?.endsWith('\\index.js') ||
-                    process.argv[1]?.includes('@ddukbg/github-enterprise-mcp') ||
+                    process.argv[1]?.includes('@bennycho/github-enterprise-mcp') ||
                     process.argv[0]?.includes('node') ||  // node 명령어로 직접 실행 
                     process.env.npm_execpath?.includes('npx'); // npx로 실행
 
@@ -157,7 +157,7 @@ if (isDirectRun) {
 MCP GitHub Enterprise Server
 
 Usage:
-  npx @ddukbg/github-enterprise-mcp [options]
+  npx @bennycho/github-enterprise-mcp [options]
 
 Options:
   --baseUrl <url>              GitHub Enterprise API base URL
@@ -184,7 +184,7 @@ Environment Variables:
 MCP GitHub Enterprise Server
 
 Usage:
-  npx @ddukbg/github-enterprise-mcp [options]
+  npx @bennycho/github-enterprise-mcp [options]
 
 Options:
   --baseUrl <url>              GitHub Enterprise API base URL

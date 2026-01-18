@@ -1,3 +1,4 @@
+
 [![MseeP.ai Security Assessment Badge](https://mseep.net/pr/containerelic-github-enterprise-mcp-badge.png)](https://mseep.ai/app/containerelic-github-enterprise-mcp)
 
 [![Trust Score](https://archestra.ai/mcp-catalog/api/badge/quality/ddukbg/github-enterprise-mcp)](https://archestra.ai/mcp-catalog/ddukbg__github-enterprise-mcp)
@@ -6,49 +7,49 @@
 
 ![image](https://github.com/user-attachments/assets/55403caa-c81d-486a-8ec7-3a2532e7545e)
 
-An MCP (Model Context Protocol) server for integration with GitHub Enterprise API. This server provides an MCP interface to easily access repository information, issues, PRs, and more from GitHub Enterprise in Cursor.
+這是一個用於與 GitHub Enterprise API 整合的 MCP (Model Context Protocol) 伺服器。此伺服器提供 MCP 介面，讓您能輕鬆地在 Cursor 中存取 GitHub Enterprise 的儲存庫資訊、Issues、PR 等內容。
 
-## Compatibility
+## 相容性 (Compatibility)
 
-This project is primarily designed for GitHub Enterprise Server environments, but it also works with:
+本專案主要是為 GitHub Enterprise Server 環境設計，但也適用於：
 
 - GitHub.com
 - GitHub Enterprise Cloud
 
-> **Note**: Some enterprise-specific features (like license information and enterprise statistics) will not work with GitHub.com or GitHub Enterprise Cloud.
+> **注意**：某些企業特定功能（如授權資訊和企業統計數據）在 GitHub.com 或 GitHub Enterprise Cloud 上無法運作。
 
-## Key Features
+## 主要功能 (Key Features)
 
-- Retrieve repository list from GitHub Enterprise instances
-- Get detailed repository information
-- List repository branches
-- View file and directory contents
-- Manage issues and pull requests
-- Repository management (create, update, delete)
-- GitHub Actions workflows management
-- User management (list, create, update, delete, suspend/unsuspend users)
-- Access enterprise statistics
-- Enhanced error handling and user-friendly response formatting
+- 從 GitHub Enterprise 實例檢索儲存庫列表
+- 獲取詳細的儲存庫資訊
+- 列出儲存庫分支
+- 查看檔案和目錄內容
+- 管理 Issues 和 Pull Requests (PR)
+- 儲存庫管理（建立、更新、刪除）
+- GitHub Actions 工作流程 (Workflows) 管理
+- 使用者管理（列出、建立、更新、刪除、暫停/恢復使用者）
+- 存取企業統計數據
+- 增強的錯誤處理和友善的回應格式
 
-## Getting Started
+## 開始使用 (Getting Started)
 
-### Prerequisites
+### 先決條件 (Prerequisites)
 
-- Node.js 18 or higher
-- Access to a GitHub Enterprise instance
-- Personal Access Token (PAT)
+- Node.js 18 或更高版本
+- 能夠存取 GitHub Enterprise 實例
+- 個人存取權杖 (Personal Access Token, PAT)
 
-### Docker Installation and Setup
+### Docker 安裝與設定
 
-#### Option 1: Running with Docker
+#### 選項 1：使用 Docker 執行
 
-1. Build the Docker image:
+1. 建置 Docker 映像檔：
 
     ```bash
     docker build -t github-enterprise-mcp .
     ```
 
-2. Run the Docker container with environment variables:
+2. 使用環境變數執行 Docker 容器：
 
     ```bash
     docker run -p 3000:3000 \
@@ -58,7 +59,7 @@ This project is primarily designed for GitHub Enterprise Server environments, bu
       github-enterprise-mcp
     ```
 
-> **Note**: The Dockerfile is configured to run with `--transport http` by default. If you need to change this, you can override the command:
+> **注意**：Dockerfile 預設配置為使用 `--transport http` 執行。如果需要更改此設定，您可以覆蓋該命令：
 
 ```bash
 docker run -p 3000:3000 \
@@ -68,9 +69,9 @@ docker run -p 3000:3000 \
   github-enterprise-mcp node dist/index.js --transport http --debug
 ```
 
-#### Option 2: Using Docker Compose
+#### 選項 2：使用 Docker Compose
 
-1. Create a `.env` file in the project root with the required environment variables:
+1. 在專案根目錄建立一個 `.env` 檔案，並填入所需的環境變數：
 
     ```shell
     GITHUB_ENTERPRISE_URL=https://github.your-company.com/api/v3
@@ -78,31 +79,31 @@ docker run -p 3000:3000 \
     DEBUG=true
     ```
 
-2. Start the container with Docker Compose:
+2. 使用 Docker Compose 啟動容器：
 
     ```bash
     docker-compose up -d
     ```
 
-3. Check the logs:
+3. 查看日誌：
 
     ```bash
     docker-compose logs -f
     ```
 
-4. Stop the container:
+4. 停止容器：
 
     ```bash
     docker-compose down
     ```
 
-### Installation and Setup
+### 安裝與設定 (Installation and Setup)
 
-#### Local Development (Using Concurrent Mode)
+#### 本地開發（使用並行模式）
 
-This method is recommended for active development with automatic recompilation and server restarts:
+此方法推薦用於需要自動重新編譯和伺服器重啟的活躍開發過程：
 
-1. Clone the repository and install required packages:
+1. 複製儲存庫並安裝所需套件：
 
     ```bash
     git clone https://github.com/ddukbg/github-enterprise-mcp.git
@@ -110,7 +111,7 @@ This method is recommended for active development with automatic recompilation a
     npm install
     ```
 
-2. Run the development server:
+2. 執行開發伺服器：
 
     ```bash
     export GITHUB_TOKEN="your_github_token"
@@ -118,20 +119,20 @@ This method is recommended for active development with automatic recompilation a
     npm run dev
     ```
 
-    This will:
-    - Compile TypeScript code automatically when files change
-    - Restart the server when compiled files are updated
-    - Run the server in HTTP mode for URL-based connections
+    這將會：
+    - 當檔案變更時自動編譯 TypeScript 程式碼
+    - 當編譯後的檔案更新時重新啟動伺服器
+    - 以 HTTP 模式執行伺服器以進行基於 URL 的連接
 
-3. Connect to Cursor using URL mode as described below
+3. 如下所述使用 URL 模式連接到 Cursor
 
-### Installation and Setup for Production
+### 生產環境安裝與設定
 
-#### Option 1: Using URL Mode (Recommended for Local Development)
+#### 選項 1：使用 URL 模式（推薦用於本地開發）
 
-This method is the most stable and recommended for local development or testing:
+此方法最穩定，推薦用於本地開發或測試：
 
-1. Clone the repository and install required packages:
+1. 複製儲存庫並安裝所需套件：
 
     ```bash
     git clone https://github.com/ddukbg/github-enterprise-mcp.git
@@ -139,14 +140,14 @@ This method is the most stable and recommended for local development or testing:
     npm install
     ```
 
-2. Build the project:
+2. 建置專案：
 
     ```bash
     npm run build
     chmod +x dist/index.js
     ```
 
-3. Run the server:
+3. 執行伺服器：
 
     ```bash
     export GITHUB_TOKEN="your_github_token"
@@ -154,8 +155,8 @@ This method is the most stable and recommended for local development or testing:
     node dist/index.js --transport http --debug
     ```
 
-4. Connect to Cursor using URL mode:
-   - Add the following to your Cursor's `.cursor/mcp.json` file:
+4. 使用 URL 模式連接到 Cursor：
+   - 將以下內容新增到您的 Cursor `.cursor/mcp.json` 檔案中：
 
    ```json
    {
@@ -167,75 +168,75 @@ This method is the most stable and recommended for local development or testing:
    }
    ```
 
-#### Option 2: Install as a Global Command (npm link)
+#### 選項 2：安裝為全域指令 (npm link)
 
-This method is useful for local development:
+此方法適用於本地開發：
 
 ```bash
-# After cloning the repository
+# 複製儲存庫後
 git clone https://github.com/ddukbg/github-enterprise-mcp.git
 cd github-enterprise-mcp
 
-# Install required packages
+# 安裝所需套件
 npm install
 
-# Build
+# 建置
 npm run build
 chmod +x dist/index.js
 
-# Link globally
+# 全域連結
 npm link
 
-# Run as a global command
+# 作為全域指令執行
 export GITHUB_TOKEN="your_github_token"
 export GITHUB_ENTERPRISE_URL="https://github.your-company.com/api/v3"
 github-enterprise-mcp --transport=http --debug
 ```
 
-#### Option 3: Using npx (When Package is Published)
+#### 選項 3：使用 npx（當套件已發布時）
 
-If the package is published to the public npm registry:
+如果套件已發布到公共 npm 註冊表：
 
 ```bash
-npx @ddukbg/github-enterprise-mcp --token=your_github_token --github-enterprise-url=https://github.your-company.com/api/v3
+npx @bennycho/github-enterprise-mcp --token=your_github_token --github-enterprise-url=https://github.your-company.com/api/v3
 ```
 
-## Integration with AI Tools
+## 與 AI 工具整合 (Integration with AI Tools)
 
 ### Claude Desktop
 
-Add the following to your `claude_desktop_config.json`:
+將以下內容新增到您的 `claude_desktop_config.json`：
 
 ```json
 {
   "mcpServers": {
     "github-enterprise": {
       "command": "npx",
-      "args": ["-y", "@ddukbg/github-enterprise-mcp", "--token=YOUR_GITHUB_TOKEN", "--github-enterprise-url=YOUR_GITHUB_ENTERPRISE_URL"]
+      "args": ["-y", "@bennycho/github-enterprise-mcp", "--token=YOUR_GITHUB_TOKEN", "--github-enterprise-url=YOUR_GITHUB_ENTERPRISE_URL"]
     }
   }
 }
 ```
 
-Replace `YOUR_GITHUB_TOKEN` and `YOUR_GITHUB_ENTERPRISE_URL` with your actual values.
+請將 `YOUR_GITHUB_TOKEN` 和 `YOUR_GITHUB_ENTERPRISE_URL` 替換為您的實際值。
 
 ### Cursor
 
-#### Recommended: URL Mode (Most Stable)
+#### 推薦：URL 模式（最穩定）
 
-For the most reliable operation in Cursor, using URL mode is recommended:
+為了在 Cursor 中獲得最可靠的操作體驗，建議使用 URL 模式：
 
-1. Start the server in a separate terminal window:
+1. 在單獨的終端機視窗中啟動伺服器：
 
    ```bash
    cd /path/to/github-enterprise-mcp
    GITHUB_ENTERPRISE_URL="https://github.your-company.com/api/v3" GITHUB_TOKEN="your_github_token" node dist/index.js --transport http
    ```
 
-2. Configure Cursor's MCP settings:
-   - Open Cursor and go to **Settings**
-   - Navigate to **AI > MCP Servers**
-   - Edit your `.cursor/mcp.json` file:
+2. 設定 Cursor 的 MCP 設定：
+   - 開啟 Cursor 並前往 **Settings (設定)**
+   - 導航至 **AI > MCP Servers**
+   - 編輯您的 `.cursor/mcp.json` 檔案：
 
    ```json
    {
@@ -247,24 +248,24 @@ For the most reliable operation in Cursor, using URL mode is recommended:
    }
    ```
 
-3. Restart Cursor to apply the changes
+3. 重啟 Cursor 以套用變更
 
-#### Alternative: Command Mode
+#### 替代方案：Command 模式
 
-Alternatively, you can configure Cursor to use the command mode, although URL mode is more reliable:
+或者，您可以將 Cursor 設定為使用 Command 模式，儘管 URL 模式更為可靠：
 
-1. Open Cursor and go to **Settings**
-2. Navigate to **AI > MCP Servers**
-3. Click **Add MCP Server**
-4. Enter the following details:
+1. 開啟 Cursor 並前往 **Settings (設定)**
+2. 導航至 **AI > MCP Servers**
+3. 點擊 **Add MCP Server (新增 MCP 伺服器)**
+4. 輸入以下詳細資訊：
    - **Name**: GitHub Enterprise
    - **Command**: `npx`
-   - **Arguments**: `@ddukbg/github-enterprise-mcp`
+   - **Arguments**: `@bennycho/github-enterprise-mcp`
    - **Environment Variables**:
-     - `GITHUB_ENTERPRISE_URL`: Your GitHub Enterprise API URL
-     - `GITHUB_TOKEN`: Your GitHub personal access token
+     - `GITHUB_ENTERPRISE_URL`: 您的 GitHub Enterprise API URL
+     - `GITHUB_TOKEN`: 您的 GitHub 個人存取權杖 (PAT)
 
-Alternatively, you can manually edit your `.cursor/mcp.json` file to include:
+或者，您可以手動編輯 `.cursor/mcp.json` 檔案以包含：
 
 ```json
 {
@@ -272,7 +273,7 @@ Alternatively, you can manually edit your `.cursor/mcp.json` file to include:
     "github-enterprise": {
       "command": "npx",
       "args": [
-        "@ddukbg/github-enterprise-mcp"
+        "@bennycho/github-enterprise-mcp"
       ],
       "env": {
         "GITHUB_ENTERPRISE_URL": "https://github.your-company.com/api/v3",
@@ -283,100 +284,100 @@ Alternatively, you can manually edit your `.cursor/mcp.json` file to include:
 }
 ```
 
-## Language Configuration
+## 語言設定 (Language Configuration)
 
-This MCP server supports both English and Korean languages. You can configure the language using:
+此 MCP 伺服器支援英文和韓文。您可以使用以下方式設定語言：
 
-### Environment Variables
+### 環境變數
 
 ```bash
-# Set language to Korean
+# 設定語言為韓文
 export LANGUAGE=ko
 
-# Or in .env file
+# 或者在 .env 檔案中
 LANGUAGE=ko
 ```
 
-### Command-line Arguments
+### 命令列參數
 
 ```bash
-# Set language to Korean
+# 設定語言為韓文
 node dist/index.js --language ko
 ```
 
-The default language is English if not specified.
+如果未指定，預設語言為英文。
 
-## Additional Options in HTTP Mode
+## HTTP 模式下的其他選項
 
-- `--debug`: Enable debug logging
-- `--github-enterprise-url <URL>`: Set GitHub Enterprise API URL
-- `--token <TOKEN>`: Set GitHub Personal Access Token
-- `--language <LANG>`: Set language (en or ko, default: en)
+- `--debug`: 啟用除錯日誌
+- `--github-enterprise-url <URL>`: 設定 GitHub Enterprise API URL
+- `--token <TOKEN>`: 設定 GitHub 個人存取權杖
+- `--language <LANG>`: 設定語言（en 或 ko，預設值：en）
 
-## Available MCP Tools
+## 可用的 MCP 工具 (Available MCP Tools)
 
-This MCP server provides the following tools:
+此 MCP 伺服器提供以下工具：
 
-| Tool Name | Description | Parameters | Required PAT Permissions |
+| 工具名稱 | 描述 | 參數 | 必要的 PAT 權限 |
 |---|---|---|---|
-| `list-repositories` | Retrieve repository list for a user or organization | `owner`: Username/org name<br>`isOrg`: Whether it's an organization<br>`type`: Repository type<br>`sort`: Sort criteria<br>`page`: Page number<br>`perPage`: Items per page | `repo` |
-| `get-repository` | Get detailed repository information | `owner`: Repository owner<br>`repo`: Repository name | `repo` |
-| `list-branches` | List branches of a repository | `owner`: Repository owner<br>`repo`: Repository name<br>`protected_only`: Whether to show only protected branches<br>`page`: Page number<br>`perPage`: Items per page | `repo` |
-| `get-content` | Retrieve file or directory contents | `owner`: Repository owner<br>`repo`: Repository name<br>`path`: File/directory path<br>`ref`: Branch/commit (optional) | `repo` |
-| `list-pull-requests` | List pull requests in a repository | `owner`: Repository owner<br>`repo`: Repository name<br>`state`: PR state filter<br>`sort`: Sort criteria<br>`direction`: Sort direction<br>`page`: Page number<br>`per_page`: Items per page | `repo` |
-| `get-pull-request` | Get pull request details | `owner`: Repository owner<br>`repo`: Repository name<br>`pull_number`: Pull request number | `repo` |
-| `create-pull-request` | Create a new pull request | `owner`: Repository owner<br>`repo`: Repository name<br>`title`: PR title<br>`head`: Head branch<br>`base`: Base branch<br>`body`: PR description<br>`draft`: Create as draft PR | `repo` |
-| `merge-pull-request` | Merge a pull request | `owner`: Repository owner<br>`repo`: Repository name<br>`pull_number`: Pull request number<br>`merge_method`: Merge method<br>`commit_title`: Commit title<br>`commit_message`: Commit message | `repo` |
-| `list-issues` | List issues in a repository | `owner`: Repository owner<br>`repo`: Repository name<br>`state`: Issue state filter<br>`sort`: Sort criteria<br>`direction`: Sort direction<br>`page`: Page number<br>`per_page`: Items per page | `repo` |
-| `get-issue` | Get issue details | `owner`: Repository owner<br>`repo`: Repository name<br>`issue_number`: Issue number | `repo` |
-| `list-issue-comments` | List comments on an issue or pull request | `owner`: Repository owner<br>`repo`: Repository name<br>`issue_number`: Issue/PR number<br>`page`: Page number<br>`per_page`: Items per page | `repo` |
-| `create-issue` | Create a new issue | `owner`: Repository owner<br>`repo`: Repository name<br>`title`: Issue title<br>`body`: Issue body content<br>`labels`: Array of label names<br>`assignees`: Array of user logins<br>`milestone`: Milestone ID | `repo` |
-| `create-repository` | Create a new repository | `name`: Repository name<br>`description`: Repository description<br>`private`: Whether private<br>`auto_init`: Initialize with README<br>`gitignore_template`: Add .gitignore<br>`license_template`: Add license<br>`org`: Organization name | `repo` |
-| `update-repository` | Update repository settings | `owner`: Repository owner<br>`repo`: Repository name<br>`description`: New description<br>`private`: Change privacy<br>`default_branch`: Change default branch<br>`has_issues`: Enable/disable issues<br>`has_projects`: Enable/disable projects<br>`has_wiki`: Enable/disable wiki<br>`archived`: Archive/unarchive | `repo` |
-| `delete-repository` | Delete a repository | `owner`: Repository owner<br>`repo`: Repository name<br>`confirm`: Confirmation (must be true) | `delete_repo` |
-| `list-workflows` | List GitHub Actions workflows | `owner`: Repository owner<br>`repo`: Repository name<br>`page`: Page number<br>`perPage`: Items per page | `actions:read` |
-| `list-workflow-runs` | List workflow runs | `owner`: Repository owner<br>`repo`: Repository name<br>`workflow_id`: Workflow ID/filename<br>`branch`: Filter by branch<br>`status`: Filter by status<br>`page`: Page number<br>`perPage`: Items per page | `actions:read` |
-| `trigger-workflow` | Trigger a workflow | `owner`: Repository owner<br>`repo`: Repository name<br>`workflow_id`: Workflow ID/filename<br>`ref`: Git reference<br>`inputs`: Workflow inputs | `actions:write` |
-| `get-license-info` | Get GitHub Enterprise license information | - | **Requires site_admin (Administrator) account** |
-| `get-enterprise-stats` | Get GitHub Enterprise system statistics | - | **Requires site_admin (Administrator) account** |
+| `list-repositories` | 檢索使用者或組織的儲存庫列表 | `owner`: 使用者名稱/組織名稱<br>`isOrg`: 是否為組織<br>`type`: 儲存庫類型<br>`sort`: 排序標準<br>`page`: 頁碼<br>`perPage`: 每頁項目數 | `repo` |
+| `get-repository` | 獲取詳細的儲存庫資訊 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱 | `repo` |
+| `list-branches` | 列出儲存庫的分支 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`protected_only`: 是否只顯示受保護的分支<br>`page`: 頁碼<br>`perPage`: 每頁項目數 | `repo` |
+| `get-content` | 檢索檔案或目錄內容 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`path`: 檔案/目錄路徑<br>`ref`: 分支/提交 (選填) | `repo` |
+| `list-pull-requests` | 列出儲存庫中的 Pull Requests | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`state`: PR 狀態篩選<br>`sort`: 排序標準<br>`direction`: 排序方向<br>`page`: 頁碼<br>`per_page`: 每頁項目數 | `repo` |
+| `get-pull-request` | 獲取 Pull Request 詳情 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`pull_number`: Pull Request 編號 | `repo` |
+| `create-pull-request` | 建立新的 Pull Request | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`title`: PR 標題<br>`head`: Head 分支<br>`base`: Base 分支<br>`body`: PR 描述<br>`draft`: 建立為草稿 PR | `repo` |
+| `merge-pull-request` | 合併 Pull Request | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`pull_number`: Pull Request 編號<br>`merge_method`: 合併方式<br>`commit_title`: 提交標題<br>`commit_message`: 提交訊息 | `repo` |
+| `list-issues` | 列出儲存庫中的 Issues | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`state`: Issue 狀態篩選<br>`sort`: 排序標準<br>`direction`: 排序方向<br>`page`: 頁碼<br>`per_page`: 每頁項目數 | `repo` |
+| `get-issue` | 獲取 Issue 詳情 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`issue_number`: Issue 編號 | `repo` |
+| `list-issue-comments` | 列出 Issue 或 Pull Request 的留言 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`issue_number`: Issue/PR 編號<br>`page`: 頁碼<br>`per_page`: 每頁項目數 | `repo` |
+| `create-issue` | 建立新的 Issue | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`title`: Issue 標題<br>`body`: Issue 內容<br>`labels`: 標籤名稱陣列<br>`assignees`: 被指派者登入帳號陣列<br>`milestone`: 里程碑 ID | `repo` |
+| `create-repository` | 建立新的儲存庫 | `name`: 儲存庫名稱<br>`description`: 儲存庫描述<br>`private`: 是否私人<br>`auto_init`: 使用 README 初始化<br>`gitignore_template`: 新增 .gitignore<br>`license_template`: 新增授權條款<br>`org`: 組織名稱 | `repo` |
+| `update-repository` | 更新儲存庫設定 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`description`: 新描述<br>`private`: 變更隱私設定<br>`default_branch`: 變更預設分支<br>`has_issues`: 啟用/停用 issues<br>`has_projects`: 啟用/停用 projects<br>`has_wiki`: 啟用/停用 wiki<br>`archived`: 封存/取消封存 | `repo` |
+| `delete-repository` | 刪除儲存庫 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`confirm`: 確認 (必須為 true) | `delete_repo` |
+| `list-workflows` | 列出 GitHub Actions 工作流程 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`page`: 頁碼<br>`perPage`: 每頁項目數 | `actions:read` |
+| `list-workflow-runs` | 列出工作流程執行記錄 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`workflow_id`: 工作流程 ID/檔名<br>`branch`: 依分支篩選<br>`status`: 依狀態篩選<br>`page`: 頁碼<br>`perPage`: 每頁項目數 | `actions:read` |
+| `trigger-workflow` | 觸發工作流程 | `owner`: 儲存庫擁有者<br>`repo`: 儲存庫名稱<br>`workflow_id`: 工作流程 ID/檔名<br>`ref`: Git 參照<br>`inputs`: 工作流程輸入 | `actions:write` |
+| `get-license-info` | 獲取 GitHub Enterprise 授權資訊 | - | **需要 site_admin (管理員) 帳號** |
+| `get-enterprise-stats` | 獲取 GitHub Enterprise 系統統計數據 | - | **需要 site_admin (管理員) 帳號** |
 
-> **Note**: For Enterprise-specific tools (`get-license-info` and `get-enterprise-stats`), a user with **site administrator** privileges is required. A Classic Personal Access Token is recommended, as Fine-grained tokens may not support these Enterprise-level permissions.
+> **注意**：對於企業特定工具（`get-license-info` 和 `get-enterprise-stats`），需要具有 **網站管理員 (site administrator)** 權限的使用者。建議使用 Classic Personal Access Token，因為 Fine-grained tokens 可能不支援這些企業級權限。
 
-## Using the Tools in Cursor
+## 在 Cursor 中使用工具
 
-Once you have set up the MCP server and configured Cursor to connect to it, you can use the GitHub Enterprise tools directly in Cursor's AI chat. Here are some examples:
+設定好 MCP 伺服器並配置 Cursor 連接後，您可以在 Cursor 的 AI 聊天中直接使用 GitHub Enterprise 工具。以下是一些範例：
 
-### Listing Repositories
+### 列出儲存庫
 
 ```js
 mcp_github_enterprise_list_repositories(owner="octocat")
 ```
 
-### Getting Repository Information
+### 獲取儲存庫資訊
 
 ```js
 mcp_github_enterprise_get_repository(owner="octocat", repo="hello-world")
 ```
 
-### Listing Pull Requests
+### 列出 Pull Requests
 
 ```js
 mcp_github_enterprise_list_pull_requests(owner="octocat", repo="hello-world", state="open")
 ```
 
-### Managing Issues
+### 管理 Issues
 
 ```js
-# List issues
+# 列出 issues
 mcp_github_enterprise_list_issues(owner="octocat", repo="hello-world", state="all")
-# Get issue details
+# 獲取 issue 詳情
 mcp_github_enterprise_get_issue(owner="octocat", repo="hello-world", issue_number=1)
 
-# Get issue/PR comments
+# 獲取 issue/PR 留言
 mcp_github_enterprise_list_issue_comments(owner="octocat", repo="hello-world", issue_number=1)
 
 
-# Create a new issue
+# 建立新的 issue
 mcp_github_enterprise_create_issue(
   owner="octocat", 
   repo="hello-world",
@@ -386,16 +387,16 @@ mcp_github_enterprise_create_issue(
 )
 ```
 
-### Working with Repository Content
+### 使用儲存庫內容
 
 ```js
 mcp_github_enterprise_get_content(owner="octocat", repo="hello-world", path="README.md")
 ```
 
-### Repository Management
+### 儲存庫管理
 
 ```
-# Create a new repository
+# 建立新的儲存庫
 mcp_github_enterprise_create_repository(
   name="new-project",
   description="This is a new project",
@@ -403,7 +404,7 @@ mcp_github_enterprise_create_repository(
   auto_init=true
 )
 
-# Update repository settings
+# 更新儲存庫設定
 mcp_github_enterprise_update_repository(
   owner="octocat",
   repo="hello-world",
@@ -412,18 +413,18 @@ mcp_github_enterprise_update_repository(
 )
 ```
 
-### User Management (Enterprise Only)
+### 使用者管理（僅限 Enterprise）
 
-These features are specifically designed for GitHub Enterprise Server environments and require administrative permissions:
+這些功能專為 GitHub Enterprise Server 環境設計，需要管理員權限：
 
 ```js
-# List all users in the GitHub Enterprise instance
+# 列出 GitHub Enterprise 實例中的所有使用者
 mcp_github_enterprise_list_users(filter="active", per_page=100)
 
-# Get a specific user's details
+# 獲取特定使用者的詳細資訊
 mcp_github_enterprise_get_user(username="octocat")
 
-# Create a new user (Enterprise only)
+# 建立新使用者 (僅限 Enterprise)
 mcp_github_enterprise_create_user(
   login="newuser",
   email="newuser@example.com",
@@ -431,36 +432,36 @@ mcp_github_enterprise_create_user(
   company="ACME Inc."
 )
 
-# Update a user's information (Enterprise only)
+# 更新使用者資訊 (僅限 Enterprise)
 mcp_github_enterprise_update_user(
   username="octocat",
   email="updated-email@example.com",
   location="San Francisco"
 )
 
-# Suspend a user (Enterprise only)
+# 暫停使用者 (僅限 Enterprise)
 mcp_github_enterprise_suspend_user(
   username="octocat",
   reason="Violation of terms of service"
 )
 
-# Unsuspend a user (Enterprise only)
+# 恢復使用者 (僅限 Enterprise)
 mcp_github_enterprise_unsuspend_user(username="octocat")
 
-# List organizations a user belongs to
+# 列出使用者所屬的組織
 mcp_github_enterprise_list_user_orgs(username="octocat")
 ```
 
-## API Improvements
+## API 改進 (API Improvements)
 
-- Flexible API URL configuration (supports various environment variables and command-line arguments)
-- Enhanced error handling and timeout management
-- User-friendly response formatting and messages
+- 靈活的 API URL 配置（支援各種環境變數和命令列參數）
+- 增強的錯誤處理和逾時管理
+- 友善的回應格式和訊息
 
-## Contributing
+## 貢獻 (Contributing)
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+歡迎提交貢獻！請隨意提交 Pull Request。
 
-## License
+## 授權 (License)
 
 ISC

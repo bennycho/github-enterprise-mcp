@@ -3,7 +3,7 @@
     "github-enterprise": {
       "command": "npx",
       "args": [
-        "@ddukbg/github-enterprise-mcp",
+        "@bennycho/github-enterprise-mcp",
         "--transport=http",
         "--debug"
       ],
